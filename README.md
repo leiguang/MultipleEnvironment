@@ -1,30 +1,33 @@
-# [MultipleEnvironment](https://github.com/leiguang/MultipleEnvironment)
-## 本项目包含 “iOS app配置多环境变量  + 使用fastlane快速打包并上传蒲公英/AppStore”
+# GitHub[MultipleEnvironment](https://github.com/leiguang/MultipleEnvironment)
+### 本项目包含 “iOS app配置多环境变量  + 使用fastlane快速打包并上传蒲公英/AppStore”
 
 > 参考
-> 1.基本概念请先阅读[iOS app配置多个环境变量](https://www.imooc.com/article/45288)
-> 2.[使用fastlane快速打包并上传蒲公英/AppStore](https://www.pgyer.com/doc/view/fastlane)
-> 3.[利用Jenkins持续集成iOS项目](https://www.jianshu.com/p/41ecb06ae95f)
+> 1. 基本概念请先阅读[iOS app配置多个环境变量](https://www.imooc.com/article/45288)
+> 2. [使用fastlane快速打包并上传蒲公英/AppStore](https://www.pgyer.com/doc/view/fastlane)
+> 3. [利用Jenkins持续集成iOS项目](https://www.jianshu.com/p/41ecb06ae95f)
 
-
+---
 
 ### 需求：切换以下功能时无需修改代码
 1. 切换服务器时。
 2. 开发、测试环境下的 “分享、统计” 等功能 使用开发渠道统计数据，上线后才使用线上渠道统计。
 3. 开发、测试环境显示全部功能，而正式上线时需服务端控制该功能的显示/隐藏（例如：躲避苹果的支付审核，测试环境下允许支付宝、微信、苹果内购 3种支付方式，而审核时只显示苹果内购支付）（注：千万不要试图躲避内购，否则苹果生气了后果很严重，亲身体验）
 
+---
 
 ### 定义三个项目环境变量。
 - dev: 开发
 - adhoc: 测试
 - appstore: 线上
 
+---
 
 ### 可选方案：
 1. 利用Build Configuration来配置多环境
 2. 利用xcconfig文件来配置多环境
 3. 利用Targets来配置多环境
 
+---
 
 ### 配置步骤：
 1. 根据本项目需求，采用最简单轻量级的方案 "Build Configuration" 来配置多环境。
@@ -59,7 +62,8 @@
                     "Archive" - "dev-release"
     ![scheme_1](https://github.com/leiguang/MultipleEnvironment/blob/master/resources/scheme_1.png)
     ![scheme_2](https://github.com/leiguang/MultipleEnvironment/blob/master/resources/scheme_2.png)
-    
+   
+---
                 
 ### 代码中的使用：
 1. 配置不同服务器地址
@@ -87,13 +91,17 @@ channel = "appstore"
 #endif
 ```
 
+---
+
 ### 使用：
 需要切换环境时，直接选中对应的Scheme，run就好了。
 
+---
 
 ### 补充：
 如果想在同一部手机上安装多个不同环境下的相同App，可选择 "对应Target" -> "Build Settings" -> "+" -> "Add User-Defined Setting" 为不同Scheme配置不同包名、应用名、应用图标等，但是要注意，如果App里中有和 包名bundle Id相关的配置，则要小心了，例如推送证书，它指定推送到对应bundle id的应用上（亲身踩坑）。 此时简单的使用 "Build Configuration" 则无法满足需求，可选择 多Targets来配置多环境、多证书之类。
 
+---
 
 ### fastlane自动打包上传
 [使用fastlane快速打包并上传蒲公英/AppStore](https://www.pgyer.com/doc/view/fastlane)这篇文章写得非常清晰详细了。我的fastlane配置文件已经在项目中了 /fastlane/Fastfile。更多fastlane的actions信息可以在[fastlane actions文档](https://docs.fastlane.tools/actions)中查看
@@ -104,7 +112,8 @@ channel = "appstore"
         其中 "fastlane release"正式包还需配置/fastlane/Appfile中的 "App Store Connect Team ID"和"Developer Portal Team ID"。（注意这里使用 release而不是appstore字段，是因为appstore字段已经被fastlane作为其他用途了）
 
 补充：打包后，在项目根目录下会出现 ipa包，它已被.gitignore忽略，并且 每次打新包都会自动覆盖旧ipa包。通过fastlane打的包也会出现在 Xcode的Organizer中.
-        
+       
+---
         
 ### 使用Jenkins持续集成
 本项目未使用，可参阅[利用Jenkins持续集成iOS项目](https://www.jianshu.com/p/41ecb06ae95f)
