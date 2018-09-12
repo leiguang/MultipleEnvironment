@@ -1,0 +1,57 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Archive and upload a new development ipa to the pgy"
+  lane :dev do
+    # add actions here: https://docs.fastlane.tools/actions
+    
+    # Variant 1: Ask for a one line input
+    changelog = prompt(text: "Changelog: ")
+    
+    build_app(
+#      workspace: "MultipleEnvironment.xcworkspace",	// 如果安装了Cocoapods则使用这个
+      scheme: "MultipleEnvironment-dev",
+      export_method: "development"
+    )
+    pgyer(api_key: "6cc1c3bb45402b6bca3ce9dd7d9934e0", user_key: "db56c53203609d76894fd14c92c1da10", update_description: changelog)
+  end
+
+  desc "Archive and upload a new ad-hoc ipa to the pgy"
+  lane :adhoc do
+    # add actions here: https://docs.fastlane.tools/actions
+
+    # Variant 1: Ask for a one line input
+    changelog = prompt(text: "Changelog: ")
+
+    build_app(
+#      workspace: "MultipleEnvironment.xcworkspace",
+      scheme: "MultipleEnvironment-adhoc",
+      export_method: "ad-hoc"
+    )
+    pgyer(api_key: "6cc1c3bb45402b6bca3ce9dd7d9934e0", user_key: "db56c53203609d76894fd14c92c1da10", update_description: changelog)
+  end
+
+  desc "Push a new release build to the App Store"
+  lane :release do
+    build_app(
+#	 workspace: "MultipleEnvironment.xcworkspace", 
+	scheme: "MultipleEnvironment-appstore"
+    )
+    upload_to_app_store(skip_metadata: true, skip_screenshots: true)
+  end
+end
