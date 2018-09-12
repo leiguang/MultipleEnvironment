@@ -2,9 +2,9 @@
 ### 本项目包含 “iOS app配置多环境变量  + 使用fastlane快速打包并上传蒲公英/AppStore”
 
 > 参考
-> 1. 基本概念请先阅读[iOS app配置多个环境变量](https://www.imooc.com/article/45288)
-> 2. [使用fastlane快速打包并上传蒲公英/AppStore](https://www.pgyer.com/doc/view/fastlane)
-> 3. [利用Jenkins持续集成iOS项目](https://www.jianshu.com/p/41ecb06ae95f)
+> - 基本概念请先阅读[iOS app配置多个环境变量](https://www.imooc.com/article/45288)
+> - [使用fastlane快速打包并上传蒲公英/AppStore](https://www.pgyer.com/doc/view/fastlane)
+> - [利用Jenkins持续集成iOS项目](https://www.jianshu.com/p/41ecb06ae95f)
 
 ---
 
